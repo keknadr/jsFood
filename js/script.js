@@ -176,7 +176,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         render() {
             const card = document.createElement('div');
-            
+
             if (this.classes.length === 0) {
                 this.classes.push('menu__item');
             }
@@ -254,37 +254,36 @@ window.addEventListener('DOMContentLoaded', () => {
                 margin: 0 auto;
             `;
             // form.append(statusMessage);
-            form.insertAdjacentElement('afterend', statusMessage);
-
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-
-            // request.setRequestHeader('Content-type', 'multipart/form-data');
-            request.setRequestHeader('Content-type', 'application/json');
             const formData = new FormData(form);
 
             const object = {};
             formData.forEach((item, i) => object[i] = item);
 
             const json = JSON.stringify(object);
-            request.send(json);
 
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
+            fetch('server.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: json
+                    // body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
                     showThanksModal(message.success);
 
                     statusMessage.remove();
-
-                    form.reset();
-                } else {
+                })
+                .catch(() => {
                     showThanksModal(message.failure);
-
-                    statusMessage.remove();
-                }
-            });
+                })
+                .finally(() => {
+                    form.reset();
+                });
         });
-    } 
+    }
 
     function showThanksModal(message) {
         const prevModalDialog = document.querySelector('.modal__dialog');
@@ -308,4 +307,18 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal(modal);
         }, 4000);
     }
+
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //         method: 'POST',
+    //         body: JSON.stringify({name: 'Alex'}),
+    //         headers: {
+    //             'Content-type': 'application/json'
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(json => console.log(json));
+
+    // fetch('json.json')
+    // .then(response => response.json())
+    // .then(json => console.log(json));
 });
