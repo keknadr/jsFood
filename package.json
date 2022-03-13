@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/keknadr/jsFood#readme",
   "devDependencies": {
-    "json-server": "^0.17.0"
+    "json-server": "^0.17.0",
+    "webpack-cli": "^4.9.2"
   }
 }
