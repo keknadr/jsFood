@@ -1,11 +1,13 @@
-function slider() {
-    const arrowSlideNext = document.querySelector('.offer__slider-next'),
-        arrowSlidePrev = document.querySelector('.offer__slider-prev'),
-        slides = document.querySelectorAll('.offer__slide'),
-        amountSlidesInCounter = document.querySelector('#total'),
-        current = document.querySelector('#current'),
-        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-        slidesField = document.querySelector('.offer__slider-inner'),
+import {getZero} from '../modules/timer';
+
+function slider({container, slide, nextArrow, prevArrow, totalCounter, totalCurrent, wrapper, field}) {
+    const arrowSlideNext = document.querySelector(nextArrow),
+        arrowSlidePrev = document.querySelector(prevArrow),
+        slides = document.querySelectorAll(slide),
+        amountSlidesInCounter = document.querySelector(totalCounter),
+        current = document.querySelector(totalCurrent),
+        slidesWrapper = document.querySelector(wrapper),
+        slidesField = document.querySelector(field),
         width = window.getComputedStyle(slidesWrapper).width,
         widthWithoutPx = +width.replace(/[a-z]/g, '');
 
@@ -73,7 +75,7 @@ function slider() {
 
     // Dots for slider (more in events for arrows of slider)
 
-    const slider = document.querySelector('.offer__slider');
+    const slider = document.querySelector(container);
 
     const dotsWrapper = document.createElement('ul'),
         dots = [];
@@ -139,4 +141,4 @@ function slider() {
     });
 }
 
-module.exports = slider;
+export default slider;
